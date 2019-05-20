@@ -1,0 +1,54 @@
+int inputpin = A5;
+int sensor = 0; 
+int led = D3;
+int led2 = D1;
+int led3 = D2;
+int alrm = D4;
+int ledbright;
+
+void setup()
+{
+    pinMode(led, OUTPUT);
+    pinMode(led2, OUTPUT);
+    pinMode(led3, OUTPUT);
+    pinMode(alrm, OUTPUT);
+}
+void loop()
+{
+  
+  sensor = analogRead(inputpin);
+  ledbright = sensor;
+     
+ if(sensor > 2800 && sensor < 3500){
+     digitalWrite(led, LOW);
+     digitalWrite(led2, ledbright);
+     delay(1000);
+     digitalWrite(led2, LOW);
+     digitalWrite(led3, LOW);
+     digitalWrite(alrm, LOW);
+     
+ }
+ else if(sensor > 4000){
+     digitalWrite(led, LOW);
+     digitalWrite(led2, LOW);
+     digitalWrite(led3, HIGH);
+     digitalWrite(alrm, LOW);
+     
+ }
+ else if(sensor < 2800){
+     delay(9000);
+     digitalWrite(led, HIGH);
+     digitalWrite(led2, LOW);
+     digitalWrite(led3, LOW);
+     delay(5000);
+     digitalWrite(alrm, HIGH);
+    Particle.publish("alert"); 
+ }
+ else{
+     digitalWrite(led, LOW);
+     digitalWrite(led2, LOW);
+     digitalWrite(led3, LOW);
+     digitalWrite(alrm, LOW);
+ }
+  delay(100);
+}
